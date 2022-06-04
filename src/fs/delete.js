@@ -3,9 +3,10 @@ import * as fs from 'fs/promises';
 const customError = new Error('FS operation failed');
 
 export const remove = async () => {
-    fs.readFile('files/fileToRemove.txt')
+    const file = new URL('files/fileToRemove.txt', import.meta.url);
+    fs.readFile(file)
         .then(() => {
-            fs.rm('files/fileToRemove.txt');
+            fs.rm(file);
         })
         .catch(err => {
             if (err.code === 'ENOENT') {

@@ -6,9 +6,11 @@ import {
 } from 'fs';
 
 export const decompress = async () => {
+    const file = new URL('files/fileToCompress.txt', import.meta.url);
+    const archive = new URL('files/archive.gz', import.meta.url);
     const gunzip = createGunzip();
-    const source = createReadStream('files/archive.gz');
-    const destination = createWriteStream('files/fileToCompress.txt');
+    const source = createReadStream(archive);
+    const destination = createWriteStream(file);
 
     pipeline(source, gunzip, destination, (err) => {
         if (err) {

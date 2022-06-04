@@ -2,7 +2,8 @@ import os from 'os';
 import { Worker } from 'worker_threads';
 
 const creator = (i) => new Promise((resolve, reject) => {
-    const worker = new Worker('./worker.js', {
+    const file = new URL('./worker.js', import.meta.url);
+    const worker = new Worker(file, {
         workerData: 10 + i
     });
     worker.on('message', (res) => resolve(res));
@@ -33,6 +34,7 @@ export const performCalculations = async () => {
         }
     }
 
+    console.log(arrResults);
     return arrResults;
 };
 

@@ -3,7 +3,8 @@ import * as fs from 'fs/promises';
 const customError = new Error('FS operation failed');
 
 export const read = async () => {
-    fs.readFile('files/fileToRead.txt', 'utf8')
+    const file = new URL('files/fileToRead.txt', import.meta.url);
+    fs.readFile(file, 'utf8')
         .then(res => {
             console.log(res);
         })
