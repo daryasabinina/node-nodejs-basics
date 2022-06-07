@@ -1,16 +1,13 @@
 export const parseEnv = () => {
-    let variables = ''
-    for (const variable in process.env) {
-        if (variable.startsWith('RSS_')) {
-            const varWithVal = `${variable}=${process.env[variable]}`
-            if (!variables) {
-                variables = variables + varWithVal ;
-            } else {
-                variables = variables + '; ' + varWithVal;
-            }
+    const variables = Object.entries(process.env).reduce((accum, [key, value]) => {
+        if (key.startsWith('RSS_')) {
+            accum.push(`${key}=${value}`);
         }
-    }
-    console.log(variables);
+        return accum;
+    }, []);
+
+    const parsedVariables = variables.join('; ')
+    console.log(parsedVariables)
 };
 
 parseEnv();
