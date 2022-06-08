@@ -1,17 +1,24 @@
 import { stdout, stdin } from 'process';
-import { Transform } from 'stream';
+import { Transform, pipeline } from 'stream';
 
 export const transform = async () => {
-    class UppercaseTransform extends Transform {
+    class ReverseTransform extends Transform {
         constructor(options) {
             super(options);
         }
 
-        _transform(chunk) {
-            this.push(Buffer.from([...chunk].reverse()).toString());
+        _transform(chunk, e, callback) {
+            callback(null, Buffer.from([...chunk].reverse()).toString());
         }
     }
-    stdin.pipe(new UppercaseTransform()).pipe(stdout);
+    const reverse = new ReverseTransform();
+
+    pipeline(
+        stdin,
+        reverse,
+        stdout,
+        (err) => { throw err; }
+    )
 };
 
 transform();

@@ -1,11 +1,19 @@
-import fs from 'fs';
+import fs from 'fs/promises';
+import Stream from 'stream';
 import { stdout } from 'process';
 
 export const read = async () => {
     const file = new URL('files/fileToRead.txt', import.meta.url);
+    const readableStream = new Stream.Readable();
+    readableStream._read = () => {};
 
-    const stream = fs.createReadStream(file);
-    stream.pipe(stdout);
+    try {
+        const content = await fs.readFile(file);
+        readableStream.push(content);
+        readableStream.pipe(stdout);
+    } catch (err) {
+        throw err;
+    }
 };
 
 read();

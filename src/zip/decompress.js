@@ -14,8 +14,7 @@ export const decompress = async () => {
 
     pipeline(source, gunzip, destination, (err) => {
         if (err) {
-            console.error(err);
-            process.exitCode = 1;
+            throw err;
         }
     });
 };

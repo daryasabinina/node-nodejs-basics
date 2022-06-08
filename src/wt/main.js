@@ -1,7 +1,7 @@
 import os from 'os';
 import { Worker } from 'worker_threads';
 
-const creator = (i) => new Promise((resolve, reject) => {
+const workerCreator = (i) => new Promise((resolve, reject) => {
     const file = new URL('./worker.js', import.meta.url);
     const worker = new Worker(file, {
         workerData: 10 + i
@@ -16,7 +16,7 @@ export const performCalculations = async () => {
 
     for (let i = 0; i < cpuData.length; i++) {
         try {
-            const data = await creator(i);
+            const data = await workerCreator(i);
             arrResults.push(
                 {
                     status: 'resolved',

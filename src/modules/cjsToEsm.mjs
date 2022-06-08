@@ -8,10 +8,12 @@ const random = Math.random();
 let unknownObject;
 
 if (random > 0.5) {
-    unknownObject = import('./files/a.json', { assert: { type: 'json' } });
+    unknownObject = await import('./files/a.json', { assert: { type: 'json' } });
 } else {
-    unknownObject = import('./files/b.json', { assert: { type: 'json' } });
+    unknownObject = await import('./files/b.json', { assert: { type: 'json' } });
 }
+
+console.log(unknownObject)
 
 console.log(`Release ${release()}`);
 console.log(`Version ${version()}`);
