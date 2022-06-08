@@ -14,8 +14,7 @@ export const compress = async () => {
 
     pipeline(source, gzip, destination, (err) => {
         if (err) {
-            console.error(err);
-            process.exitCode = 1;
+            throw err;
         }
     });
 };
